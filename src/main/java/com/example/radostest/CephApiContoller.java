@@ -36,6 +36,7 @@ public class CephApiContoller {
             @PathVariable String fileName,
             @RequestBody byte[] bytes) {
         String result = "Failed";
+        long startMethod = System.currentTimeMillis();
         try {
             Rados cluster = new Rados("admin");
             System.out.println("Create cluster handle.");
@@ -59,15 +60,18 @@ public class CephApiContoller {
         } catch (RadosException e) {
             System.out.println(e.getMessage() + ": " + e.getReturnValue());
         }
+
+        long endMethod = System.currentTimeMillis();
+        System.out.println("------>write timeCost(ms)=" + (endMethod - startMethod));
         return result;
 
     }
 
-    @PostMapping("/pool/{pool}/fileName/{fileName}/read")
+    @PostMapping("/pool/{pool}/fileName/{fileName}/{length}/read")
     public byte[] read(
             @PathVariable String pool,
             @PathVariable String fileName,
-            @RequestBody int length) {
+            @PathVariable int length) {
         byte[] buf = new byte[length];
         try {
             Rados cluster = new Rados("admin");
