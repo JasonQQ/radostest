@@ -30,7 +30,7 @@ public class CephApiContoller {
         return result;
     }
 
-    @PostMapping("/fileName/{fileName}/write")
+    @PostMapping("/pool/{pool}/fileName/{fileName}/write")
     public String write(
             @PathVariable String pool,
             @PathVariable String fileName,
